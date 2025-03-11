@@ -11,7 +11,14 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function PostIndex() {
+interface Post {
+    id: number;
+    title: string;
+    content: string;
+    image: string;
+}
+
+export default function PostIndex({ posts }: { posts: Post[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="posts" />
@@ -23,22 +30,26 @@ export default function PostIndex() {
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     <Table>
-                        <TableCaption>A list of your recent invoices.</TableCaption>
+                        <TableCaption>A list of your Post</TableCaption>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[100px]">Invoice</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Method</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
+                                <TableHead className="w-[100px]">ID</TableHead>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Thumbnail</TableHead>
+                                <TableHead className="text-right">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow>
-                                <TableCell className="font-medium">INV001</TableCell>
-                                <TableCell>Paid</TableCell>
-                                <TableCell>Credit Card</TableCell>
-                                <TableCell className="text-right">$250.00</TableCell>
-                            </TableRow>
+                            {posts.map((post) => (
+                                <TableRow>
+                                    <TableCell className="font-medium">{post.id}</TableCell>
+                                    <TableCell>{post.title}</TableCell>
+                                    <TableCell>
+                                        <img className="h-10 w-10 rounded-md object-cover" src={post.image} alt={post.title} />
+                                    </TableCell>
+                                    <TableCell className="text-right">Edit/Delete</TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </div>

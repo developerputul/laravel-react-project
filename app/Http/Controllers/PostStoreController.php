@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Container\Attributes\Storage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostStoreController extends Controller
 {
@@ -17,13 +18,15 @@ class PostStoreController extends Controller
             'content' => 'required',
             'image' => 'required|image',
         ]);
+
         $data['slug'] = str($data['title'])->slug();
 
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::disk('public')->put('post', $request->file('image'));
+            $data['image'] = Storage::disk('public')->put('posts', $request->file('image'));
         }
+
         $request->user()->posts()->create($data);
 
-        return to_route('posts/index');
+        return to_route('posts.index');
     }
 }
