@@ -45,9 +45,13 @@ export default function PostIndex({ posts }: { posts: Post[] }) {
                                     <TableCell className="font-medium">{post.id}</TableCell>
                                     <TableCell>{post.title}</TableCell>
                                     <TableCell>
-                                        <img className="h-10 w-10 rounded-md object-cover" src={post.image} alt={post.title} />
+                                        <img className="h-10 w-10 rounded-full object-cover" src={`storage/${post.image}`} alt={post.title} />
                                     </TableCell>
-                                    <TableCell className="text-right">Edit/Delete</TableCell>
+                                    <TableCell className="text-right">
+                                        <Link href={route('posts.edit', post.id)} className="" text-indigo-500 hover:text-indigo-600>
+                                            Edit
+                                        </Link>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
