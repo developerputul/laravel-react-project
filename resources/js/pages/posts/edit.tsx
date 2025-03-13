@@ -54,9 +54,14 @@ export default function PostEdit({ currentPost }: { currentPost: Post }) {
                         <div className="grid gap-2">
                             <Label htmlFor="image">Image</Label>
                             <Input id="image" type="file" onChange={handleFileChange} />
-                            <img src={currentPost.image} alt={currentPost.title} className="h-10 w-10 rounded-full object-cover" />
-
-                            {imagePreview && <img className="h-10 w-10 rounded-full object-cover" src={imagePreview} alt="Preview" />}
+                            <div className="flex gap-2">
+                                <img
+                                    src={currentPost.image}
+                                    alt={currentPost.title}
+                                    className={'h-10 w-10 rounded-full object-cover' + (imagePreview ? 'opacity-30' : '')}
+                                />
+                                {imagePreview && <img className="h-10 w-10 rounded-full object-cover" src={imagePreview} alt="Preview" />}
+                            </div>
                             <InputError message={errors.image} />
                         </div>
 

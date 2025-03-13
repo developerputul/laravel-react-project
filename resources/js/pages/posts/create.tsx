@@ -7,7 +7,7 @@ import { type BreadcrumbItem } from '@/types';
 
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +23,7 @@ type PostForm = {
 };
 
 export default function PostCreate() {
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const { data, setData, post, processing, errors } = useForm<Required<PostForm>>({
         title: '',
         content: '',
@@ -33,6 +34,7 @@ export default function PostCreate() {
         const file = e.target.files?.[0];
         if (file) {
             setData('image', file);
+            setImagePreview(URL.createObjectURL(file)); // Update preview
         }
     };
 
@@ -62,6 +64,7 @@ export default function PostCreate() {
                         <div className="grid gap-2">
                             <Label htmlFor="image">Image</Label>
                             <Input id="image" type="file" onChange={handleFileChange} />
+                            {imagePreview && <img className="h-64 w-full object-cover" src={imagePreview} alt="Preview" />}
                             <InputError message={errors.image} />
                         </div>
 
